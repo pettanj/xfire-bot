@@ -6,7 +6,7 @@
 
 ## Features
 ### Rankat
-when a user mentions the role @rankat, a new channel called "Testo" is created (or reused) and moves all members of the role with voice active to the "Testo"-channel
+when a user mentions the role @rankat, during the following 2 minutes or 4 answers it will wait for peaople to answer "ja" and when the time or answer limit is reached the users that said "ja" and the user that mentioned @rankat are moved to a new channel called "Testo" (or reuse existein "Testo" channel)
 
 ### Beat saber
 Whenever a users activity changes to beat saber a new channel "Beat Saber" is created (or reused) and user is moved there
