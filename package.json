@@ -4,6 +4,7 @@
   "description": "Jag känner en bot",
   "main": "bot.js",
   "author": "Petrus Briland",
+  "type": "module",
   "dependencies": {
     "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
     "discord.js": "^12.5.3",
