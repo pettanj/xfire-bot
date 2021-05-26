@@ -1,3 +1,4 @@
 # Xfire-bot
-1. npm install
-2. node bot.js
+1. create auth.json and add token, tenor_key
+2. npm install
+3. node bot.js
