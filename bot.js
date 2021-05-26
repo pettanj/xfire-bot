@@ -14,7 +14,7 @@ client.once('ready', () => {
 client.login(auth.token);
 
 // Listen to messages
-client.on('message', async message => {
+client.on('message', message => {
   messageHandler(message, client);
 });
 

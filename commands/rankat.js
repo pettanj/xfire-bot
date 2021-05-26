@@ -3,14 +3,20 @@ export default function handleRankat(message, role, client) {
   if (existingChannel) {
     role.members.forEach(member => {
       if (member.voice) {
-        member.voice.setChannel(existingChannel);
+        try {
+         member.voice.setChannel(existingChannel);
+        } catch (error) {
+        }
       }
     })
   } else {
     message.guild.channels.create('Testo', { type: 'voice' }).then(ch => {
       role.members.forEach(member => {
         if (member.voice) {
-          member.voice.setChannel(ch);
+          try {
+            member.voice.setChannel(ch);
+          } catch (error) {
+          }
         }
       })
     })
