@@ -1,14 +1,56 @@
-import {moveUsersToChannel} from '../utils.js';
+import {moveToChannel, getOrCreateChannel} from '../utils.js';
+
+let rankedDudes = [];
+let rankedStarter = null;
+let currentMessage = null;
+function getRankedDude(username) {
+  let dude = rankedDudes.find((x) => x.username === username);
+  rankedDudes = rankedDudes.filter(x => x.username !== username);
+  return dude;
+
+}
+
+function startTimer(active) {
+  setTimeout(() => {
+    active = false;
+  }, 120000);
+}
 
 export default function handleRankat(message, role, client) {
-  const filter = m => m.content.startsWith('ja') || m.content.startsWith('Ja');
-  message.channel.awaitMessages(filter, { min: 1, max: 4, time: 120000 })
-    .then(collected => {
-      let userList = [...collected].map(x => x[1].author.id)
-        .filter((item, pos, self) =>self.indexOf(item) == pos)
-        .map(id => message.channel.guild.members.cache.find(member => member.id === id));
-        userList.push(message.member);
-      moveUsersToChannel('Testo', userList, client, message);
-    })
-    .catch(collected => console.log(collected.size));
+  currentMessage = message;
+  rankedStarter = message.member;
+  let active = true;
+  startTimer(active);
+  client.on('message', m => {
+    if(active && (m.content.includes('ja') || m.content.includes('Ja'))) {
+      getOrCreateChannel('Testo', client, message).then(channel => {
+          if (!moveToChannel(m.member, channel)) {
+            rankedDudes.push(m.member);
+          } else if (rankedStarter !== null){
+            addRankedStarter(channel);
+          }
+      });
+    }
+  });
+
+  client.on('voiceStateUpdate', (oldMember, newMember) => {
+    if (newMember.channelID && rankedDudes.length) {
+      let user = getRankedDude(newMember.member.username);
+      if (user) {
+        getOrCreateChannel('Testo', client, currentMessage).then(channel => {
+          moveToChannel(user, channel);
+          if (rankedStarter !== null){
+            addRankedStarter(channel);
+          }
+        });
+      } 
+    }
+  })
+
+  function addRankedStarter (channel) {
+    if(!moveToChannel(rankedStarter, channel)) {
+      rankedDudes.push(rankedStarter);
+    }
+    rankedStarter = null;
+  }
 }

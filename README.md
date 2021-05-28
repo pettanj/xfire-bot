@@ -6,7 +6,8 @@
 
 ## Features
 ### Rankat
-when a user mentions the role @rankat, during the following 2 minutes or 4 answers it will wait for peaople to answer "ja" and when the time or answer limit is reached the users that said "ja" and the user that mentioned @rankat are moved to a new channel called "Testo" (or reuse existein "Testo" channel)
+when a user mentions the role @rankat, during the following 2 minutes people the people that answers "ja" are moved to a new channel called "Testo" (or reuse existing "Testo" channel). if user is not in a voice channel it will be moved when joining any other voice channel.
+When the first user is moved to the channel, the starter will also be moved or is set to be moved when joining a voice channel.
 
 ### Beat saber
 Whenever a users activity changes to beat saber a new channel "Beat Saber" is created (or reused) and user is moved there
